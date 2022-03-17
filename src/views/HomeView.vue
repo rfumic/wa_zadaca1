@@ -1,13 +1,32 @@
 <template>
-  <h1 class="text-4xl">Vue.js Commits</h1>
-  <div class="bg-blue-200 flex flex-col items-center m-5 p-5">
+  <h1 class="text-4xl m-2">Vue.js Commits</h1>
+  <div class="flex flex-col items-center m-5 p-5">
     <div
-      class="border border-black w-1/2 m-1 bg-white text-xl hover:cursor-pointer hover:text-blue-500"
+      class="w-1/3 text-gray-900 bg-white rounded-lg border border-gray-200"
       v-for="commit in dataArray"
       :key="commit.sha"
       @click="goToDetails(commit)"
     >
-      {{ commit.sha }}
+      <button
+        type="button"
+        class="inline-flex relative items-center py-2 px-4 w-full text-xl font-medium rounded-t-lg border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="mr-2 w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        {{ commit.sha }}
+      </button>
     </div>
   </div>
 </template>
@@ -32,17 +51,21 @@ export default {
         );
 
         const result = await response.json();
-        console.log(result);
         this.dataArray = result;
       } catch (err) {
         console.error(err);
       }
     },
     goToDetails(params) {
-      console.log(params);
       this.$router.push({
         name: "DetailsView",
-        params: params,
+        params: {
+          name: params.commit.author.name,
+          email: params.commit.author.email,
+          date: params.commit.author.date,
+          sha: params.sha,
+          message: params.commit.message,
+        },
       });
     },
   },
