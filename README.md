@@ -1,4 +1,4 @@
-# Web Aplikacije Zadaća 1
+# Web Aplikacije Zadaća 1 **_(WA-001)_**
 
 ## Autor
 
